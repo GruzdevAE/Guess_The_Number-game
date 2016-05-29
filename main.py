@@ -1,29 +1,60 @@
+from os import system
 from random import randrange
 
 init = ''
-guess = 0
-while init != 'exit':
-    init = input('Hello! Type \'rules\' to print rules, type number to set max number or type \'exit\' to exit\n')
-    if init == 'rules':
-        print('''\nThe rules are simle:
-            Just type in the number you want to set as the max number
-            and start guessing. One number per attempt untill you're succesfull.
-            In the end i wil also print the number of attempts it has taken you
-            to guess the number.\n''')
-    elif init.isdigit():
-        number = randrange(int(init))+1
-        attempt = 1
-        guess = input('\nEnter your guess here: ')
-        if guess.isdigit():
-            while int(guess) != number:
-                if number <= int(guess):
-                    print('\nThat\'s too much')
-                elif number >= int(guess):
-                    print('\nDefinately not that small')
+max_attempts = 0
+max_num = 100
+while init != "Выход":
+    system('cls')
+    init = input('''Привет! Давай сыграем в угадай число.
+Напиши "Правила" для вывода правил
+Для изменения параметров напиши "Параметры"
+Для начала игры напиши "Игра"
+Для выхода напиши "Выход"''')
+    if init == 'Правила':
+        system('cls')
+        print('''Всё очень просто:
+Я загадываю число, ты угадываешь его.
+Если хочешь, можно установить максимальное число попыток.
+В противном случае, игра продолжается до тех пор, пока ты не отгадаешь число.
+В конце я так же выведу количество попыток, за которое ты угадал число.''')
+        input('Нажми любую кнопку для возврата в меню')
+        system('cls')
+    elif init == 'Параметры':
+        system('cls')
+        options = ''
+        while options != 'Меню':
+            system('cls')
+            print('Параметры:')
+            print('Максимальное число:', max_num)
+            print('Число попыток:', max_attempts)
+            print('Если число попыток установить 0, количество попыток будет бесконечным.')
+            options = input('Введи параметр для изменения или "Меню" для выхода в меню: ')
+            if options == 'Максимальное число':
+                max_num = int(input('Введи максимальное число, до которого можно загадывать: '))
+            if options == 'Число попыток':
+                max_attempts = int(input('Введи максимальное число попыток, которое ты можешь использовать: '))
+    elif init == 'Игра':
+        system('cls')
+        print('Дай-ка подумать...')
+        number = randrange(max_num)+1
+        print('Всё, я загадал. Можешь начинать.')
+        guess = 0
+        attempt = 0
+        while int(guess) != number:
+            if attempt == max_attempts and max_attempts != 0:
+                print('Ты проиграл, у тебя закончились попытки.')
+                break
+            guess = input('Введи число: ')
+            if guess.isdigit():
+                if int(guess) < number:
+                    print('Маловато, давай ещё раз.')
+                elif int(guess) > number:
+                    print('Слишком много.')
                 attempt += 1
-                guess = input('\nEnter your guess here: ')
-        else:
-            print('No, you need to enter digits here.')
-        print('Exactly! I\'ve had the', number, 'number in mind!')
-        print('You\'ve made it in', attempt, 'attempts')
-print('Goodbye!')
+            else:
+                print('Нет, я просил число. Давай ещё раз')
+        if attempt < max_attempts or max_attempts == 0:
+            print('Отлично! Ты угадал всего за', attempt-1, 'попыток!')
+        input('Нажми \'Enter\' чтобы продолжить')
+        system('cls')
