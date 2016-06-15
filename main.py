@@ -94,7 +94,23 @@ while init != "Выход":
                     print('Здорово, я, наконец, угадал!')
                     input('Дави \'Enter\' и давай ещё раз попробуем!')
     elif game_choice == 'Анаграммы':
-        pass
+        more = None
+        while more != 'Нет'
+            system('cls')
+            print('Хорошо, давай сыграем в анаграммы. Попробую придумать слово поинтересней.')
+            with open(words.txt).split() as words:
+                word = choice(words)
+                letters = []
+                [letters.append(letter) for letter in word]
+                shuffle(letters)
+                [print(letter, end='') for letter in letters]
+                print('Ну как тебе? Можешь начинать угадывать.')
+                answer = None
+                while answer != word:
+                    answer = input('Попытка номер ' + 0+=1)
+                    if answer != word:
+                        pint('Нет, не угадал, давай снова.')
+                more = input('Молодец! Угадал. Хочешь ещё раз попробовать?')
     else:
         print('Не понял, давай ещё раз.')
 print('До встречи.')
