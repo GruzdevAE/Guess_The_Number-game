@@ -1,6 +1,9 @@
 from os import system
 from random import randrange, shuffle, choice
 
+def highscore(score, name):
+    pass
+
 init = ''
 max_attempts = 0
 max_num = 100
@@ -104,22 +107,37 @@ while game_choice != 'Выход':
                          '\nНу и, наконец, можно выйти, написав \'Выход\'').capitalize()
             if menu == 'Игра'
                 more = None
+                score = 0
+                name = None
                 while more != 'Нет'
                     system('cls')
                     print('Хорошо, давай сыграем в анаграммы. Попробую придумать слово поинтересней.')
                     with open(words.txt).split() as words:
                         word = choice(words)
-                        letters = []
-                        [letters.append(letter) for letter in word]
-                        shuffle(letters)
-                        [print(letter, end='') for letter in letters]
-                        print('Ну как тебе? Можешь начинать угадывать.')
+                        jumble = []
+                        [jumble.append(letter) for letter in word]
+                        shuffle(jumble)
+                        [print(letter, end='') for letter in jumble]
+                        print('Ну как тебе? Можешь начинать угадывать.' + 
+                              'За это слово ты сможешь получить ' + len(jumble) + ' очков.')
                         answer = None
                         while answer != word:
-                            answer = input('Попытка номер ' + 0+=1 +': ')
+                            answer = input('Пиши слово: ').lower()
                             if answer != word:
-                                pint('Нет, не угадал, давай снова.')
+                                print('Нет, не угадал, давай снова.')
+                            elif not answer:
+                                empty = input('Хочешь подсказку или сдаешься?').capitalize()
+                                if empty == 'Подсказка':
+                                    pass
+                                elif empty == 'Сдаюсь':
+                                    print('Ха-ха, я выиграл!')
+                                    input('Дави \'Enter\', чтобы продолжить.')
+                                    break
+                            else:
+                                score += len(jumble*10)
                         more = input('Молодец! Угадал. Хочешь ещё раз попробовать?\n').capitalize()
+                print('Ты заработал ' + score + ' очков. Думаю, это было бы неплохо куда-нибудь записать.')
+                name = input('Впиши сюда своё имя: ')
     else:
         print('Не понял, давай ещё раз.')
 print('До встречи.')
