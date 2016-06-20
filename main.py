@@ -118,23 +118,25 @@ while game_choice != 'Выход':
                         [jumble.append(letter) for letter in word]
                         shuffle(jumble)
                         [print(letter, end='') for letter in jumble]
+                        points = len(jumble)*10
                         print('\nНу как тебе? Можешь начинать угадывать. ' + 
-                              'За это слово ты сможешь получить ' + str(len(jumble)*10) + ' очков.')
+                              'За это слово ты сможешь получить ' + str(points) + ' очков.')
                         answer = None
                         while answer != word:
                             answer = input('Пиши слово: ').lower()
-                            if answer != word:
-                                print('Нет, не угадал, давай снова.')
-                            elif not answer:
+                            if not answer:
                                 empty = input('Хочешь подсказку или сдаешься?').capitalize()
                                 if empty == 'Подсказка':
-                                    pass
+                                    points = len(jumble)*5
+                                    print('Вот тебе подсказка:')
                                 elif empty == 'Сдаюсь':
                                     print('Ха-ха, я выиграл!')
                                     input('Дави \'Enter\', чтобы продолжить.')
                                     break
+                            elif answer != word:
+                                print('Нет, не угадал, давай снова.')
                             else:
-                                score += len(jumble*10)
+                                score += points
                         more = input('Молодец! Угадал. Хочешь ещё раз попробовать?\n').capitalize()
                 print('Ты заработал ' + score + ' очков. Думаю, это было бы неплохо куда-нибудь записать.')
                 name = input('Впиши сюда своё имя: ')
