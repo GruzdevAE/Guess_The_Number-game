@@ -112,14 +112,14 @@ while game_choice != 'Выход':
                 while more != 'Нет':
                     system('cls')
                     print('Хорошо, давай сыграем в анаграммы. Попробую придумать слово поинтересней.')
-                    with open(words.txt).split() as words:
-                        word = choice(words)
+                    with open('words.txt') as text:
+                        word = choice(text.read().split(' '))
                         jumble = []
                         [jumble.append(letter) for letter in word]
                         shuffle(jumble)
                         [print(letter, end='') for letter in jumble]
-                        print('Ну как тебе? Можешь начинать угадывать.' + 
-                              'За это слово ты сможешь получить ' + len(jumble) + ' очков.')
+                        print('\nНу как тебе? Можешь начинать угадывать. ' + 
+                              'За это слово ты сможешь получить ' + str(len(jumble)*10) + ' очков.')
                         answer = None
                         while answer != word:
                             answer = input('Пиши слово: ').lower()
