@@ -88,7 +88,7 @@ while game_choice != 'Выход':
                             guess_pc = int(max_num_pc) - (int(max_num_pc)-min_num_pc)//2
                             answer = input(guess_pc).capitalize()
                             if guess_pc == max_num_pc:
-                                print ('Эй! Да ты жульничаешь! Я так и знал! Ну да ладно, я и сам, ведь, пытался. Так что мы квиты, да?')
+                                print('Эй! Да ты жульничаешь! Я так и знал! Ну да ладно, я и сам, ведь, пытался. Так что мы квиты, да?')
                                 input('Жми \'Enter\' для возврата в меню.')
                                 break
                             if answer == 'Больше':
@@ -110,6 +110,8 @@ while game_choice != 'Выход':
                 score = 0
                 name = None
                 while more != 'Нет':
+                    hlp = 0
+                    answer_message = 'Пиши слово: '
                     system('cls')
                     print('Хорошо, давай сыграем в анаграммы. Попробую придумать слово поинтересней.')
                     with open('words.txt') as text:
@@ -127,8 +129,10 @@ while game_choice != 'Выход':
                             if not answer:
                                 empty = input('Хочешь подсказку или сдаешься?').capitalize()
                                 if empty == 'Подсказка':
-                                    points = len(jumble)*5
+                                    n += 1
+                                    points = (len(jumble)-n)*10
                                     print('Вот тебе подсказка:')
+                                    answer_message = 'Подсказка: ' + str(word[:n]) + '\nПиши слово: '
                                 elif empty == 'Сдаюсь':
                                     print('Ха-ха, я выиграл!')
                                     input('Дави \'Enter\', чтобы продолжить.')
@@ -138,7 +142,7 @@ while game_choice != 'Выход':
                             else:
                                 score += points
                         more = input('Молодец! Угадал. Хочешь ещё раз попробовать?\n').capitalize()
-                print('Ты заработал ' + score + ' очков. Думаю, это было бы неплохо куда-нибудь записать.')
+                print('Ты заработал ' + str(score) + ' очков. Думаю, это было бы неплохо куда-нибудь записать.')
                 name = input('Впиши сюда своё имя: ')
     else:
         print('Не понял, давай ещё раз.')
