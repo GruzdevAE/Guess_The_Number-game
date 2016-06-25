@@ -1,8 +1,8 @@
 from os import system
 from random import randrange, shuffle, choice
 
-def highscore(score, name):
-    pass
+# def highscore(score, name):
+#     pass
 
 init = ''
 max_attempts = 0
@@ -78,17 +78,20 @@ while game_choice != 'Выход':
                                   '\nЗнаю я тебя, сейчас, в процессе игры, ещё десять раз поменяешь число.' +
                                   '\nДавай пиши сюда. И сам не забудешь, и я буду уверен что ты не мухлюешь.\n')
                     if cheat:
-                        print('Таааак. Мне кажется, это число', cheat, '. Ну что, я угадал? Можешь не отвечать, я и так знаю что угадал, я же великолепен!')
+                        print('Таааак. Мне кажется, это число', cheat, '. Ну что, я угадал? Можешь не отвечать,' +
+                              ' я и так знаю что угадал, я же великолепен!')
                     else:
                         print('А тебя не так просто провести. Ну что ж, так даже интересней.')
-                        print('Давай условимся отвечать строго является ли моё число \'Больше\', \'Меньше\' или же я \'Угадал\'')
+                        print('Давай условимся отвечать строго является ли моё число \'Больше\', \'Меньше\' ' +
+                              'или же я \'Угадал\'')
                         answer = ''
                         min_num_pc = 0
                         while answer != 'Угадал':
                             guess_pc = int(max_num_pc) - (int(max_num_pc)-min_num_pc)//2
                             answer = input(guess_pc).capitalize()
                             if guess_pc == max_num_pc:
-                                print('Эй! Да ты жульничаешь! Я так и знал! Ну да ладно, я и сам, ведь, пытался. Так что мы квиты, да?')
+                                print('Эй! Да ты жульничаешь! Я так и знал! Ну да ладно, я и сам, ведь, пытался.' +
+                                      ' Так что мы квиты, да?')
                                 input('Жми \'Enter\' для возврата в меню.')
                                 break
                             if answer == 'Больше':
@@ -110,6 +113,8 @@ while game_choice != 'Выход':
                 score = 0
                 name = None
                 while more != 'Нет':
+                    hlp = 0
+                    answer_message = 'Пиши слово: '
                     system('cls')
                     print('Хорошо, давай сыграем в анаграммы. Попробую придумать слово поинтересней.')
                     with open('words.txt') as text:
@@ -118,23 +123,27 @@ while game_choice != 'Выход':
                         [jumble.append(letter) for letter in word]
                         shuffle(jumble)
                         [print(letter, end='') for letter in jumble]
-                        print('\nНу как тебе? Можешь начинать угадывать. ' + 
-                              'За это слово ты сможешь получить ' + str(len(jumble)*10) + ' очков.')
+                        points = len(jumble)*10
+                        print('\nНу как тебе? Можешь начинать угадывать. ' +
+                              'За это слово ты сможешь получить ' + str(points) + ' очков.')
                         answer = None
                         while answer != word:
-                            answer = input('Пиши слово: ').lower()
-                            if answer != word:
-                                print('Нет, не угадал, давай снова.')
-                            elif not answer:
+                            answer = input(answer_message).lower()
+                            if not answer:
                                 empty = input('Хочешь подсказку или сдаешься?').capitalize()
                                 if empty == 'Подсказка':
-                                    pass
+                                    hlp += 1
+                                    points = (len(jumble)-hlp)*10
+                                    print('Вот тебе подсказка:')
+                                    answer_message = 'Подсказка: ' + word[:hlp] + '\nПиши слово: '
                                 elif empty == 'Сдаюсь':
                                     print('Ха-ха, я выиграл!')
                                     input('Дави \'Enter\', чтобы продолжить.')
                                     break
+                            elif answer != word:
+                                print('Нет, не угадал, давай снова.')
                             else:
-                                score += len(jumble*10)
+                                score += points
                         more = input('Молодец! Угадал. Хочешь ещё раз попробовать?\n').capitalize()
                 print('Ты заработал ' + str(score) + ' очков. Думаю, это было бы неплохо куда-нибудь записать.')
                 name = input('Впиши сюда своё имя: ')
